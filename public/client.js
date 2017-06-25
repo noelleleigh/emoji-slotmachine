@@ -69,10 +69,19 @@ const toggleSpinning = function toggleSpinning(generator, elementArray){
     spinningState = false;
   } else {
     // If not spinning, start spinning
+    // Make the button more responsive by updating the emoji immediately instead of after spinDelay
+    displaySlotValues(elementArray, generator.next().value);
     spinningInterval = setInterval(() => displaySlotValues(elementArray, generator.next().value), spinDelay);
     spinningState = true;
   }
 }
+
+// Stop the double-tap zoom on mobile 
+// Source: https://stackoverflow.com/a/28752323
+const preventDoubleTapZoom = event => {
+  event.preventDefault();
+  event.target.click();
+};
 
 // Get array of slot elements
 const slotElements = Array.prototype.slice.call(
@@ -84,6 +93,7 @@ const slotsGenerator = slotValuesGenerator(slotAlphabet, slotElements.length);
 
 // Make a button to start and stop the spinning
 const slotButton = document.getElementById('slot-button');
+slotButton.addEventListener('touchend', preventDoubleTapZoom);
 slotButton.addEventListener('click', event => {
   // Start or stop the spinning
   toggleSpinning(slotsGenerator, slotElements);
@@ -91,4 +101,34 @@ slotButton.addEventListener('click', event => {
   event.target.textContent = `${spinningState ? 'Stop' : 'Start'} Spinning!`;
   // Change the button style
   event.target.classList.toggle('italic');
+  
+  // Make a button to copy emoji string if it doesn't exist
+  if (!document.getElementById('copy-to-clipboard-btn')){
+    const copyButton = document.createElement('button');
+    copyButton.id = 'copy-to-clipboard-btn';
+    copyButton.textContent = 'Copy to Clipboard 📋'
+    copyButton.addEventListener('touchend', preventDoubleTapZoom);
+    copyButton.addEventListener('click', event => {
+      const emojiString = slotElements.map(elem => elem.textContent).join('');
+      const tempInput = document.createElement('input');
+      tempInput.value = emojiString;
+      document.getElementById('emoji-slot').appendChild(tempInput);
+      tempInput.select();
+      try {
+        const success = document.execCommand('copy');
+        console.log(`${success ? `successful: ${emojiString}` : 'unsuccessful'}`);
+        copyButton.textContent = success ? 'Copied!' : 'Couldn\'t copy 😢'
+      } catch (err) {
+        console.log(err);
+      }
+      tempInput.remove();
+    });
+    document.getElementById('clipboard-button-flex').appendChild(copyButton);
+  } else {
+    document.getElementById('copy-to-clipboard-btn').textContent = 'Copy to Clipboard 📋';
+  }
 });
+
+
+
+

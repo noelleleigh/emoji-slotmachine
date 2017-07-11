@@ -13,11 +13,6 @@ let spinningInterval = undefined;
 // ms between emoji change
 const spinDelay = 100;
 
-// Random number generator (https://stackoverflow.com/a/7228322)
-const randomIntFromInterval = function randomIntFromInterval(min,max){
-    return Math.floor(Math.random()*(max-min+1)+min);
-}
-
 /**
  * Randomize array element order in-place.
  * Using Durstenfeld shuffle algorithm.
@@ -76,7 +71,7 @@ const toggleSpinning = function toggleSpinning(generator, elementArray){
   }
 }
 
-// Stop the double-tap zoom on mobile 
+// Stop the double-tap zoom on mobile
 // Source: https://stackoverflow.com/a/28752323
 const preventDoubleTapZoom = event => {
   event.preventDefault();
@@ -101,7 +96,7 @@ slotButton.addEventListener('click', event => {
   event.target.textContent = `${spinningState ? 'Stop' : 'Start'} Spinning!`;
   // Change the button style
   event.target.classList.toggle('italic');
-  
+
   // Make a button to copy emoji string if it doesn't exist
   if (!document.getElementById('copy-to-clipboard-btn')){
     const copyButton = document.createElement('button');
@@ -117,7 +112,7 @@ slotButton.addEventListener('click', event => {
       try {
         const success = document.execCommand('copy');
         console.log(`${success ? `successful: ${emojiString}` : 'unsuccessful'}`);
-        copyButton.textContent = success ? 'Copied!' : 'Couldn\'t copy 😢'
+        event.target.textContent = success ? 'Copied!' : 'Couldn\'t copy 😢'
       } catch (err) {
         console.log(err);
       }

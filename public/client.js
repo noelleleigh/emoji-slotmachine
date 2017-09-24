@@ -30,7 +30,7 @@ function shuffleArray(array) {
 
 // Generator that loops through a shuffled valueArray forever
 function* valueGenerator(valueArray) {
-  const shuffledValueArray = shuffleArray(valueArray.slice(0))
+  const shuffledValueArray = shuffleArray(valueArray.slice(0));
   for (let index = 0; true; index++){
     index = index % shuffledValueArray.length;
     yield shuffledValueArray[index];
@@ -40,7 +40,7 @@ function* valueGenerator(valueArray) {
 // Generator that yields an array of slotValues
 function* slotValuesGenerator(valueArray, length) {
   const generators = Array(length).fill().map(() => {
-    return valueGenerator(valueArray)
+    return valueGenerator(valueArray);
   });
 
   while (true){
@@ -52,9 +52,9 @@ function* slotValuesGenerator(valueArray, length) {
 // Set the textContent of the elements in elemArray to the values in valArray
 const displaySlotValues = (elemArray, valArray) => {
   elemArray.forEach((value, index, array) => {
-    array[index].textContent = valArray[index]
+    array[index].textContent = valArray[index];
   });
-}
+};
 
 // Toggle the spinning of the emoji
 const toggleSpinning = function toggleSpinning(generator, elementArray){
@@ -69,7 +69,7 @@ const toggleSpinning = function toggleSpinning(generator, elementArray){
     spinningInterval = setInterval(() => displaySlotValues(elementArray, generator.next().value), spinDelay);
     spinningState = true;
   }
-}
+};
 
 // Stop the double-tap zoom on mobile
 // Source: https://stackoverflow.com/a/28752323
@@ -101,7 +101,7 @@ slotButton.addEventListener('click', event => {
   if (!document.getElementById('copy-to-clipboard-btn')){
     const copyButton = document.createElement('button');
     copyButton.id = 'copy-to-clipboard-btn';
-    copyButton.textContent = 'Copy to Clipboard 📋'
+    copyButton.textContent = 'Copy to Clipboard 📋';
     copyButton.addEventListener('touchend', preventDoubleTapZoom);
     copyButton.addEventListener('click', event => {
       const emojiString = slotElements.map(elem => elem.textContent).join('');
@@ -112,7 +112,7 @@ slotButton.addEventListener('click', event => {
       try {
         const success = document.execCommand('copy');
         console.log(`${success ? `successful: ${emojiString}` : 'unsuccessful'}`);
-        event.target.textContent = success ? 'Copied!' : 'Couldn\'t copy 😢'
+        event.target.textContent = success ? 'Copied!' : 'Couldn\'t copy 😢';
       } catch (err) {
         console.log(err);
       }

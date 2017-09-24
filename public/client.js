@@ -5,7 +5,7 @@
 // add other scripts at the bottom of index.html
 
 // Define allowed values for slots
-const slotAlphabet = ['💖', '🐱', '✨', '🌈', '🦄', '🌼', '🐶', '💎'];
+const slotAlphabet = ['💖', '🐱', '✨', '🌈', '🦄', '🌼', '🐶', '💎', '🌷', '🐣', '🦊', '🐇', '🌺'];
 // Boolean for determining if spinning or not
 let spinningState = false;
 // Variable for holding the setInterval identifier

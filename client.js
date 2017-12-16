@@ -1,8 +1,6 @@
 // client-side js
 // run by the browser each time your view template is loaded
 
-console.log('hi')
-
 // Define allowed values for slots
 const slotAlphabet = ['💖', '🐱', '✨', '🌈', '🦄', '🌼', '🐶', '💎', '🌷', '🐣', '🦊', '🐇', '🌺'];
 // Boolean for determining if spinning or not

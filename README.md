@@ -1,7 +1,9 @@
-Welcome to Emoji Slotmachine
+Emoji Slotmachine ✨🐣🐇✨🐶
 =========================
 
-A fun little javascript toy I made to practice using [ES6 Generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*) and controlling [setInterval()](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval).
+A fun little javascript toy I made to practice using [ES6 Generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*),
+[setInterval()](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval),
+and [setTimeout()](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout)
 
 [Try it on Glitch!](https://emoji-slotmachine.glitch.me/)
 

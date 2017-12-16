@@ -1,8 +1,7 @@
 // client-side js
 // run by the browser each time your view template is loaded
 
-// by default, you've got jQuery,
-// add other scripts at the bottom of index.html
+console.log('hi')
 
 // Define allowed values for slots
 const slotAlphabet = ['💖', '🐱', '✨', '🌈', '🦄', '🌼', '🐶', '💎', '🌷', '🐣', '🦊', '🐇', '🌺'];
@@ -18,7 +17,7 @@ const spinDelay = 100;
  * Using Durstenfeld shuffle algorithm.
  * Source: https://stackoverflow.com/a/12646864
  */
-function shuffleArray(array) {
+const shuffleArray = function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
         const temp = array[i];
@@ -29,7 +28,7 @@ function shuffleArray(array) {
 }
 
 // Generator that loops through a shuffled valueArray forever
-function* valueGenerator(valueArray) {
+const valueGenerator = function* valueGenerator(valueArray) {
   const shuffledValueArray = shuffleArray(valueArray.slice(0));
   for (let index = 0; true; index++){
     index = index % shuffledValueArray.length;
@@ -38,7 +37,7 @@ function* valueGenerator(valueArray) {
 }
 
 // Generator that yields an array of slotValues
-function* slotValuesGenerator(valueArray, length) {
+const slotValuesGenerator = function* slotValuesGenerator(valueArray, length) {
   const generators = Array(length).fill().map(() => {
     return valueGenerator(valueArray);
   });
@@ -48,19 +47,46 @@ function* slotValuesGenerator(valueArray, length) {
   }
 }
 
-
 // Set the textContent of the elements in elemArray to the values in valArray
-const displaySlotValues = (elemArray, valArray) => {
+const displaySlotValues = function displaySlotValues(elemArray, valArray) {
   elemArray.forEach((value, index, array) => {
     array[index].textContent = valArray[index];
   });
 };
+
+// Self-calling function to display a certain number of slots a given amount of times
+// Source: https://stackoverflow.com/a/3583740
+const displaySlicedValues = function displaySlicedValues(iterations, generator, elementArray, islice, delay) {
+  displaySlotValues(elementArray.slice(islice), generator.next().value.slice(islice));
+  iterations--;
+  if (iterations > 0) {
+    setTimeout(() => {
+        displaySlicedValues(iterations, generator, elementArray, islice, delay)
+    }, delay);
+  }
+}
+
+// Self-calling function to stop the slots one-by-one with delay (like a slot machine!)
+// Source: https://stackoverflow.com/a/3583740
+const slowdownSpin = function slowdownSpin(slices, iterations, generator, elementArray, delay) {
+  let islice = elementArray.length - slices
+  displaySlicedValues(iterations, generator, elementArray, islice, delay)
+  slices--;
+  if (slices > 0){
+    setTimeout(() => {
+        slowdownSpin(slices, iterations, generator, elementArray, delay)
+    }, delay*iterations);
+  }
+}
 
 // Toggle the spinning of the emoji
 const toggleSpinning = function toggleSpinning(generator, elementArray){
   if (spinningState) {
     // If spinning, stop spinning
     clearInterval(spinningInterval);
+    // Wind down the slots one-by-one
+    slowdownSpin(elementArray.length - 1, 5, generator, elementArray, spinDelay)
+    // Officially done!
     spinningState = false;
   } else {
     // If not spinning, start spinning
@@ -79,9 +105,7 @@ const preventDoubleTapZoom = event => {
 };
 
 // Get array of slot elements
-const slotElements = Array.prototype.slice.call(
-  document.querySelectorAll('#slot-row .slot')
-);
+const slotElements = Array.from(document.querySelectorAll('#slot-row .slot'));
 
 // Instantiate a generator for the slot values
 const slotsGenerator = slotValuesGenerator(slotAlphabet, slotElements.length);

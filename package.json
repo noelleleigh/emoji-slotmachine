@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/noahleigh/emoji-slotmachine.git"
+    "url": "git+https://github.com/noelleleigh/emoji-slotmachine.git"
   },
-  "author": "noahleigh",
+  "author": "noelleleigh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/noahleigh/emoji-slotmachine/issues"
+    "url": "https://github.com/noelleleigh/emoji-slotmachine/issues"
   },
-  "homepage": "https://github.com/noahleigh/emoji-slotmachine#readme"
+  "homepage": "https://github.com/noelleleigh/emoji-slotmachine#readme"
 }

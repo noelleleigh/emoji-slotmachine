@@ -1,3 +1,5 @@
+**[Moved to Sourcehut](https://git.sr.ht/~noelle/emoji-slot-machine)**
+
 Emoji Slotmachine ✨🐣🐇✨🐶
 =========================
 
